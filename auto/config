@@ -7,6 +7,8 @@ lb config noauto \
   --binary-images iso-hybrid \
   --archive-areas "main contrib non-free-firmware" \
   --debian-installer none \
-  --bootappend-live "boot=live components" \
-  --iso-application "Security OS Alpha" \
+  --image-name "fenriros-0.1-alpha" \
+  --iso-application "FenrirOS Security Workstation" \
+  --iso-volume "FENRIR_OS_0_1" \
+  --bootappend-live "boot=live components hostname=fenriros username=fenrir" \
   "${@}"
