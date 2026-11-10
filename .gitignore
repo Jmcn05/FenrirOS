@@ -1,0 +1,22 @@
+# Build directories
+.build/
+binary/
+chroot/
+cache/
+local/
+
+# Generated live-build configuration
+/config/all
+/config/binary
+/config/bootstrap
+/config/chroot
+/config/common
+/config/source
+
+# Generated images
+*.iso
+*.img
+*.qcow2
+
+# Logs
+*.log
