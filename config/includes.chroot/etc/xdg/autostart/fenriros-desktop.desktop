@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=FenrirOS Desktop Setup
+Comment=Apply first-login FenrirOS desktop defaults
+Exec=/bin/sh /usr/local/bin/fenriros-first-login.sh
+Terminal=false
+OnlyShowIn=XFCE;
+NoDisplay=true
