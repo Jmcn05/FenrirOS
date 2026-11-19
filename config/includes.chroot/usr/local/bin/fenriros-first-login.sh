@@ -3,8 +3,8 @@
 set -eu
 
 WALLPAPER="/usr/share/backgrounds/fenriros/default.png"
-MENU_ICON="/usr/share/pixmaps/fenriros/menu-icon.png"
-MARKER="${XDG_CONFIG_HOME:-$HOME/.config}/fenriros/branding-v2"
+MENU_ICON="/usr/share/pixmaps/fenriros/app-icon.png"
+MARKER="${XDG_CONFIG_HOME:-$HOME/.config}/fenriros/branding-v3"
 
 # Apply defaults once, without overwriting user changes.
 [ -e "$MARKER" ] && exit 0
