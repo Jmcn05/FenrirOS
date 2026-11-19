@@ -22,29 +22,36 @@ set_property() {
     fi
 }
 
-# Use the wallpaper properties Xfce already detected.
-PROPS=$(xfconf-query -c xfce4-desktop -p /backdrop -l 2>/dev/null |
-    grep '/last-image$' || true)
 
-if [ -n "$PROPS" ]; then
-    printf '%s\n' "$PROPS" | while IFS= read -r prop; do
-        set_property xfce4-desktop "$prop" string "$WALLPAPER"
-        set_property xfce4-desktop \
-            "${prop%/last-image}/image-style" int 5
-    done
-else
-    # Fallback for a new Xfce configuration.
-    MONITORS=$(xrandr --query 2>/dev/null |
-        awk '$2 == "connected" {print $1}' || true)
+# Configure wallpaper on all connected displays.
+MONITORS=$(xrandr --query |
+    awk '$2 == "connected" {print $1}')
 
-    for monitor in $MONITORS 0; do
-        base="/backdrop/screen0/monitor${monitor}/workspace0"
+[ -n "$MONITORS" ] || exit 1
+
+WORKSPACES=$(xfconf-query -c xfwm4 \
+    -p /general/workspace_count 2>/dev/null || echo 1)
+
+case "$WORKSPACES" in
+    ''|*[!0-9]*|0) WORKSPACES=1 ;;
+esac
+
+for monitor in $MONITORS; do
+    i=0
+    while [ "$i" -lt "$WORKSPACES" ]; do
+        base="/backdrop/screen0/monitor${monitor}/workspace${i}"
+
         set_property xfce4-desktop \
             "$base/last-image" string "$WALLPAPER"
+
         set_property xfce4-desktop \
             "$base/image-style" int 5
+
+        i=$((i + 1))
     done
-fi
+done
+
+xfdesktop --reload
 
 # Brand the standard Xfce Applications Menu.
 if [ -r "$MENU_ICON" ]; then
