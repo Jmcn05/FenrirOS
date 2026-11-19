@@ -1,0 +1,48 @@
+
+#!/bin/sh
+set -eu
+
+# Configure the default Xfce panel inside the ISO.
+# This runs during the live-build process, not at login.
+
+python3 - <<'PY'
+from pathlib import Path
+import xml.etree.ElementTree as ET
+
+config = Path("/etc/xdg/xfce4/panel/default.xml")
+icon_path = "/usr/share/pixmaps/fenriros/app-icon.png"
+
+if not config.is_file():
+    raise SystemExit("ERROR: Xfce default panel file not found")
+
+tree = ET.parse(config)
+root = tree.getroot()
+
+plugins = root.find("./property[@name='plugins']")
+
+if plugins is None:
+    raise SystemExit("ERROR: Xfce plugins configuration missing")
+
+menus = [
+    plugin for plugin in plugins.findall("property")
+    if plugin.get("value") == "applicationsmenu"
+]
+
+if not menus:
+    raise SystemExit("ERROR: Applications Menu plugin not found")
+
+for menu in menus:
+    icon = menu.find("./property[@name='button-icon']")
+
+    if icon is None:
+        icon = ET.SubElement(menu, "property")
+
+    icon.set("name", "button-icon")
+    icon.set("type", "string")
+    icon.set("value", icon_path)
+
+ET.indent(tree, space="  ")
+tree.write(config, encoding="utf-8", xml_declaration=True)
+
+print("FenrirOS: Default Applications Menu icon configured")
+PY

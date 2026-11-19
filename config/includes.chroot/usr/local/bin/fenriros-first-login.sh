@@ -53,22 +53,5 @@ done
 
 xfdesktop --reload
 
-# Brand the standard Xfce Applications Menu.
-if [ -r "$MENU_ICON" ]; then
-    MENUS=$(xfconf-query -c xfce4-panel -lv 2>/dev/null |
-        awk '$2 == "applicationsmenu" {print $1}' || true)
-
-    for menu in $MENUS; do
-        set_property xfce4-panel \
-            "$menu/button-icon" string "$MENU_ICON"
-    done
-
-    # Reload panel so the new icon appears.
-    xfce4-panel -r
-fi
-
-# Reload the Xfce panel to display the branded icon.
-xfce4-panel -r
-
 mkdir -p "$(dirname "$MARKER")"
 touch "$MARKER"
