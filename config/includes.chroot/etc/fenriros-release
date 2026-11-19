@@ -1,5 +1,5 @@
 NAME="FenrirOS"
-VERSION="0.2.0-alpha"
-VERSION_ID="0.2.0"
+VERSION="0.4.0-alpha"
+VERSION_ID="0.4.0"
 EDITION="Security Workstation"
 BASE="Debian 13 Trixie"

@@ -1,0 +1,15 @@
+# FenrirOS Graphical Installer
+calamares-settings-debian
+
+# BIOS and UEFI bootloader support
+grub-pc-bin
+grub-efi-amd64-bin
+efibootmgr
+
+# Filesystem and disk utilities
+parted
+dosfstools
+e2fsprogs
+
+# Encrypted installation support
+cryptsetup-initramfs
