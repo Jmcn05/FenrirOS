@@ -11,7 +11,7 @@ MARKER="${XDG_CONFIG_HOME:-$HOME/.config}/fenriros/branding-v3"
 [ -r "$WALLPAPER" ] || exit 1
 
 # Allow Xfce to initialize its desktop and panel.
-sleep 5
+sleep 10
 
 # Create or update an Xfconf property.
 set_property() {
@@ -58,11 +58,13 @@ if [ -r "$MENU_ICON" ]; then
     MENUS=$(xfconf-query -c xfce4-panel -lv 2>/dev/null |
         awk '$2 == "applicationsmenu" {print $1}' || true)
 
-    printf '%s\n' "$MENUS" | while IFS= read -r menu; do
-        [ -n "$menu" ] || continue
+    for menu in $MENUS; do
         set_property xfce4-panel \
             "$menu/button-icon" string "$MENU_ICON"
     done
+
+    # Reload panel so the new icon appears.
+    xfce4-panel -r
 fi
 
 # Reload the Xfce panel to display the branded icon.
