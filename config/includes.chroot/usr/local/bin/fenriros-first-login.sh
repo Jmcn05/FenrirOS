@@ -65,5 +65,8 @@ if [ -r "$MENU_ICON" ]; then
     done
 fi
 
+# Reload the Xfce panel to display the branded icon.
+xfce4-panel -r
+
 mkdir -p "$(dirname "$MARKER")"
 touch "$MARKER"
