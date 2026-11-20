@@ -10,5 +10,5 @@ lb config noauto \
   --image-name "fenriros-0.4-alpha" \
   --iso-application "FenrirOS 0.4 Alpha Security Workstation" \
   --iso-volume "FENRIR_OS_0_4" \
-  --bootappend-live "boot=live components hostname=fenriros username=fenrir" \
+  --bootappend-live "boot=live components hostname=fenriros username=fenriros-live" \
   "${@}"
